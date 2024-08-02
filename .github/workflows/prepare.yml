@@ -10,7 +10,7 @@
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 ##.title~
 
-name: Prepare for release
+name: Prepare version
 
 ## -----------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ on:
 ## -----------------------------------------------------------------------------
 
 jobs:
-  update-changelog:
+  prepare:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -54,7 +54,6 @@ jobs:
         run: |
           RELEASE_NOTES="${{ steps.get_commits.outputs.messages }}"
           dart run .github/scripts/update_changelog.dart "${{ steps.get_version.outputs.extracted_version }}" "$RELEASE_NOTES"
-        shell: bash
 
       - name: Commit and push changes
         run: |
