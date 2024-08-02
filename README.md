@@ -11,8 +11,7 @@ A package that provides a practical Debouncer for optimizing performance by cont
 ## Usage Example
 
 ```dart
-// Create the debouncer to automatically save a form to the database after
-// some delay..
+// Create a debouncer to automatically save a form to the database after some delay.
 late final _autosave = Debouncer(
   delay: const Duration(milliseconds: 500),
   onWaited: () {

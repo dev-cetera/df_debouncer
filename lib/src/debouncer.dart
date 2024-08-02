@@ -11,25 +11,8 @@ import 'dart:async' show FutureOr, Timer;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-/// # Usage Example:
-///
-/// ```dart
-/// bool _didPrint = false;
-///
-/// final _debouncer = Debouncer(
-///   const Duration(seconds: 1),
-///   onWaited: () {
-///     print('Hello World!');
-///     bool _didPrint = true;
-///   }
-/// );
-///
-/// // ...
-///
-/// this._debouncer((){
-///   bool _didPrint = false;
-/// });
-/// ```
+/// A practical Debouncer for optimizing performance by controlling the
+/// frequency of function calls in response to rapid events.
 class Debouncer {
   //
   //

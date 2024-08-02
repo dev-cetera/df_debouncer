@@ -7,10 +7,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
+/// A package that provides a practical Debouncer for optimizing performance by
+/// controlling the frequency of function calls in response to rapid events.
 library;
 
 export 'src/debouncer.dart';
-
