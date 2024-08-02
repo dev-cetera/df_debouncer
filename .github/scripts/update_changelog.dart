@@ -123,6 +123,6 @@ class _VersionSection {
   @override
   String toString() {
     final updatesString = updates.map((update) => '- $update').join('\n');
-    return '## [$version]\n\n- Released @ $releasedAt\n$updatesString\n';
+    return '## [$version]\n\n- Released @ ${releasedAt.month}/${releasedAt.year} (UTC)\n$updatesString\n';
   }
 }
