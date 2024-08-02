@@ -61,5 +61,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "Prepare release for version ${{ steps.get_version.outputs.extracted_version }}"
+          git commit -m "Prepare version ${{ steps.get_version.outputs.extracted_version }}"
           git push
