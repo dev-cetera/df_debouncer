@@ -13,7 +13,7 @@ import 'dart:io';
 
 void main(List<String> args) {
   final version = args.isNotEmpty ? args[0] : '0.1.0';
-  final newReleaseNotes = args.length > 1 ? args[1] : 'Initial release.';
+  final newReleaseNotes = args.length > 1 ? args[1] : 'Initial commit';
   final changelogPath = 'CHANGELOG.md';
   final file = File(changelogPath);
   if (!file.existsSync()) {
