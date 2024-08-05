@@ -1,9 +1,8 @@
 ##.title
 ## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 ##
-## Dart/Flutter (DF) Packages by DevCetra.com & contributors.
-##
-## See MIT LICENSE file in the root directory.
+## Dart/Flutter (DF) Packages by DevCetra.com & contributors. ee LICENSE file
+## in root directory.
 ##
 ## For more about publishing, see: https://dart.dev/tools/pub/automated-publishing
 ##
@@ -30,6 +29,9 @@ jobs:
 
       - name: Set up Dart
         uses: dart-lang/setup-dart@v1.2
+
+      - name: Upgrade dependencies
+        run: dart pub upgrade --tighten
 
       - name: Format Dart code
         run: dart format .
