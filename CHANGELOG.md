@@ -5,6 +5,7 @@
 - Released @ 8/2024 (UTC)
 - chore: Update dependencies
 - chore: Add funding and topics to pubspec.yaml
+- chore: Update pubspec.yaml with new topics
 
 ## [0.1.1]
 
