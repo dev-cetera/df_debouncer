@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.1]
+
+- Released @ 8/2024 (UTC)
+- chore: Add funding and topics to pubspec.yaml
+
 ## [0.2.0]
 
 - Released @ 8/2024 (UTC)
