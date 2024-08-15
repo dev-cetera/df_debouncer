@@ -1,8 +1,9 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
-// in root directory.
+// Dart/Flutter (DF) Packages by DevCetra.com & contributors. Use of this
+// source code is governed by an MIT-style license that can be found in the
+// LICENSE file.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -49,10 +50,10 @@ class Debouncer {
     FutureOr<void> Function()? onWaited,
     FutureOr<void> Function()? onCall,
   }) async {
-    this.cancel();
+    cancel();
     await this.onCall?.call();
     await onCall?.call();
-    this._timer = Timer(
+    _timer = Timer(
       delay,
       () async {
         await this.onWaited?.call();
@@ -67,7 +68,7 @@ class Debouncer {
 
   /// Finalizes the debouncer and calls the [onWaited] function.
   FutureOr<void> finalize({FutureOr<void> Function()? onWaited}) async {
-    if (this.cancel()) {
+    if (cancel()) {
       await this.onWaited?.call();
       await onWaited?.call();
     }
@@ -79,10 +80,10 @@ class Debouncer {
 
   /// Cancels the debouncer.
   bool cancel() {
-    if (this._timer != null) {
-      if (this._timer!.isActive) {
-        this._timer!.cancel();
-        this._timer = null;
+    if (_timer != null) {
+      if (_timer!.isActive) {
+        _timer!.cancel();
+        _timer = null;
         return true;
       }
     }
