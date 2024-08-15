@@ -17,9 +17,9 @@ funding:
 topics:
   - debouncer
   - get-it
-  - optimization
-  - performance
-  - reactive-programming
+  - reactive
+  - tool
+  - ui
 
 ## -----------------------------------------------------------------------------
 
