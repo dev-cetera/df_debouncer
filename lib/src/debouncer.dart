@@ -12,6 +12,8 @@
 
 import 'dart:async' show FutureOr, Timer;
 
+import 'package:df_type/df_type.dart' show Sequential;
+
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// A practical Debouncer for optimizing performance by controlling the
@@ -22,6 +24,11 @@ class Debouncer {
   //
 
   Timer? _timer;
+  bool _hasStarted = false;
+  final _sequential = Sequential();
+
+  /// The function to call once at the very beginning.
+  final FutureOr<void> Function()? onStart;
 
   /// The function to call after the [delay] has passed.
   final FutureOr<void> Function()? onWaited;
@@ -38,6 +45,7 @@ class Debouncer {
 
   Debouncer({
     required this.delay,
+    this.onStart,
     this.onWaited,
     this.onCall,
   });
@@ -49,19 +57,28 @@ class Debouncer {
   /// Calls the [onCall] function and then waits for [delay] before calling the
   /// [onWaited] function.
   FutureOr<void> call({
+    FutureOr<void> Function()? onStart,
     FutureOr<void> Function()? onWaited,
     FutureOr<void> Function()? onCall,
-  }) async {
+  }) {
     cancel();
-    await this.onCall?.call();
-    await onCall?.call();
+    if (!_hasStarted) {
+      _sequential.add((_) => this.onStart?.call());
+      _sequential.add((_) => onStart?.call());
+      _hasStarted = true;
+    }
+    _sequential.add((_) => this.onCall?.call());
+    _sequential.add((_) => onCall?.call());
     _timer = Timer(
       delay,
-      () async {
-        await this.onWaited?.call();
-        await onWaited?.call();
+      () {
+        _sequential.add((_) => this.onWaited?.call());
+        _sequential.add((_) => onWaited?.call());
+        _hasStarted = false;
       },
     );
+
+    return _sequential.last;
   }
 
   //
@@ -69,10 +86,11 @@ class Debouncer {
   //
 
   /// Finalizes the debouncer and calls the [onWaited] function.
-  FutureOr<void> finalize({FutureOr<void> Function()? onWaited}) async {
+  FutureOr<void> finalize({FutureOr<void> Function()? onWaited}) {
     if (cancel()) {
-      await this.onWaited?.call();
-      await onWaited?.call();
+      _sequential.add((_) => this.onWaited?.call());
+      _sequential.add((_) => onWaited?.call());
+      return _sequential.last;
     }
   }
 

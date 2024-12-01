@@ -12,21 +12,27 @@
 
 name: df_debouncer
 description: A package that provides a practical Debouncer for optimizing performance by controlling the frequency of function calls in response to rapid events.
-version: 0.2.3
-repository: https://github.com/robmllze/df_debouncer
+version: 0.2.4
+repository: https://github.com/DevCetra/df_debouncer
 funding:
   - https://www.buymeacoffee.com/robmllze
 topics:
   - debouncer
   - reactive
   - tool
-  - ui
+  - user-interface
   - utility
 
 ## -----------------------------------------------------------------------------
 
 environment:
   sdk: ">=3.5.0 <4.0.0"
+
+## -----------------------------------------------------------------------------
+
+dependencies:
+  
+  df_type: ^0.7.6
 
 ## -----------------------------------------------------------------------------
 
