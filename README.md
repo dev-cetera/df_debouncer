@@ -15,6 +15,9 @@ A package that provides a practical Debouncer for optimizing performance by cont
 // Create a debouncer to automatically save a form to the database after some delay.
 late final _autosave = Debouncer(
   delay: const Duration(milliseconds: 500),
+   onStart: () {
+      print('Saving form...');
+    },
   onWaited: () {
     final name = _nameController.text;
     final email = _emailController.text;

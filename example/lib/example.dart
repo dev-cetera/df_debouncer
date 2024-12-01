@@ -56,6 +56,9 @@ class _DebouncerExampleState extends State<DebouncerExample> {
   // Create a debouncer to automatically save a form to the database after some delay.
   late final _autosave = Debouncer(
     delay: const Duration(milliseconds: 500),
+    onStart: () {
+      print('Saving form...');
+    },
     onWaited: () {
       final name = _nameController.text;
       final email = _emailController.text;
