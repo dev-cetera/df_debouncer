@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.7]
+
+- Released @ 1/2025 (UTC)
+- chore: Added a Throttle class
+
 ## [0.2.6]
 
 - Released @ 1/2025 (UTC)
