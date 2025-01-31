@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.8]
+
+- Released @ 1/2025 (UTC)
+- chore: Performance update
+
 ## [0.2.7]
 
 - Released @ 1/2025 (UTC)
