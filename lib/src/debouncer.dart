@@ -18,7 +18,7 @@ import 'package:df_type/df_type.dart' show Sequential;
 
 /// A practical Debouncer for optimizing performance by controlling the
 /// frequency of function calls in response to rapid events.
-class Debouncer {
+final class Debouncer {
   //
   //
   //
@@ -63,17 +63,29 @@ class Debouncer {
   }) {
     cancel();
     if (!_hasStarted) {
-      _sequential.add((_) => this.onStart?.call());
-      _sequential.add((_) => onStart?.call());
+      if (this.onStart != null) {
+        _sequential.add((_) => this.onStart!());
+      }
+      if (onStart != null) {
+        _sequential.add((_) => onStart());
+      }
       _hasStarted = true;
     }
-    _sequential.add((_) => this.onCall?.call());
-    _sequential.add((_) => onCall?.call());
+    if (this.onCall != null) {
+      _sequential.add((_) => this.onCall!());
+    }
+    if (onCall != null) {
+      _sequential.add((_) => onCall());
+    }
     _timer = Timer(
       delay,
       () {
-        _sequential.add((_) => this.onWaited?.call());
-        _sequential.add((_) => onWaited?.call());
+        if (this.onWaited != null) {
+          _sequential.add((_) => this.onWaited!());
+        }
+        if (onWaited != null) {
+          _sequential.add((_) => onWaited());
+        }
         _hasStarted = false;
       },
     );
@@ -88,8 +100,12 @@ class Debouncer {
   /// Finalizes the debouncer and calls the [onWaited] function.
   FutureOr<void> finalize({FutureOr<void> Function()? onWaited}) {
     if (cancel()) {
-      _sequential.add((_) => this.onWaited?.call());
-      _sequential.add((_) => onWaited?.call());
+      if (this.onWaited != null) {
+        _sequential.add((_) => this.onWaited!());
+      }
+      if (onWaited != null) {
+        _sequential.add((_) => onWaited());
+      }
       return _sequential.last;
     }
   }

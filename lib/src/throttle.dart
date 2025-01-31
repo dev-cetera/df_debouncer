@@ -10,13 +10,13 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-class Throttle {
+final class Throttle {
   final Duration duration;
   bool _isThrottled = false;
 
   Throttle(this.duration);
 
-  Throttle.zero() : duration = const Duration();
+  Throttle.immediate() : duration = const Duration();
   Throttle.to24hz() : duration = const Duration(milliseconds: 1000 ~/ 24);
   Throttle.to30hz() : duration = const Duration(milliseconds: 1000 ~/ 30);
   Throttle.to48hz() : duration = const Duration(milliseconds: 1000 ~/ 48);
