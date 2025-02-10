@@ -12,7 +12,7 @@
 
 import 'dart:async' show FutureOr, Timer;
 
-import 'package:df_type/df_type.dart' show Sequential;
+import 'package:df_type/src/future_or/_sequential.dart' show Sequential;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
