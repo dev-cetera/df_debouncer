@@ -21,12 +21,14 @@ final class CacheManager<T> {
   }
 
   @pragma('vm:prefer-inline')
-  T? operator [](String key) => get(key);
+  T? operator [](String? key) => get(key);
 
-  T? get(String key) {
+  T? get(String? key) {
+    if (key == null) {
+      return null;
+    }
     final item = _cache[key];
-    if (item != null &&
-        (item.expiration == null || item.expiration!.isAfter(DateTime.now()))) {
+    if (item != null && (item.expiration == null || item.expiration!.isAfter(DateTime.now()))) {
       return item.value;
     }
     _cache.remove(key);
