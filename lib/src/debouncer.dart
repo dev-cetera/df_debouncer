@@ -12,7 +12,8 @@
 
 import 'dart:async' show FutureOr, Timer;
 
-import 'package:df_type/src/future_or/_sequential.dart' show Sequential;
+import 'package:df_safer_dart/df_safer_dart.dart' show Sequential, None;
+import 'package:df_type/df_type.dart' show consec;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -64,33 +65,34 @@ final class Debouncer {
     cancel();
     if (!_hasStarted) {
       if (this.onStart != null) {
-        _sequential.add((_) => this.onStart!());
+        _sequential.add((_) => consec(this.onStart!(), (_) => const None()));
       }
       if (onStart != null) {
-        _sequential.add((_) => onStart());
+        _sequential.add((_) => consec(onStart(), (_) => const None()));
       }
       _hasStarted = true;
     }
     if (this.onCall != null) {
-      _sequential.add((_) => this.onCall!());
+      _sequential.add((_) => consec(this.onCall!(), (_) => const None()));
     }
     if (onCall != null) {
-      _sequential.add((_) => onCall());
+      _sequential.add((_) => consec(onCall(), (_) => const None()));
     }
     _timer = Timer(
       delay,
       () {
         if (this.onWaited != null) {
-          _sequential.add((_) => this.onWaited!());
+          _sequential.add((_) => consec(this.onWaited!(), (_) => const None()));
         }
         if (onWaited != null) {
-          _sequential.add((_) => onWaited());
+          _sequential.add((_) => consec(onWaited(), (_) => const None()));
         }
         _hasStarted = false;
       },
     );
 
-    return _sequential.last;
+    // ignore: invalid_use_of_visible_for_testing_member
+    return _sequential.last.value;
   }
 
   //
@@ -101,12 +103,13 @@ final class Debouncer {
   FutureOr<void> finalize({FutureOr<void> Function()? onWaited}) {
     if (cancel()) {
       if (this.onWaited != null) {
-        _sequential.add((_) => this.onWaited!());
+        _sequential.add((_) => consec(this.onWaited!(), (_) => const None()));
       }
       if (onWaited != null) {
-        _sequential.add((_) => onWaited());
+        _sequential.add((_) => consec(onWaited(), (_) => const None()));
       }
-      return _sequential.last;
+      // ignore: invalid_use_of_visible_for_testing_member
+      return _sequential.last.value;
     }
   }
 

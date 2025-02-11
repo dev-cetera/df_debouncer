@@ -8,4 +8,5 @@
 //.title~
 
 export './debouncer.dart';
+export './cache_manager.dart';
 export './throttle.dart';
