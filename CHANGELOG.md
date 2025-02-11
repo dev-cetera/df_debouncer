@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.1]
+
+- Released @ 2/2025 (UTC)
+- feat: Add CacheManager
+
 ## [0.3.0]
 
 - Released @ 2/2025 (UTC)
