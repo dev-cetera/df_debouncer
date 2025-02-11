@@ -12,7 +12,7 @@
 
 name: df_debouncer
 description: A package that provides a practical Debouncer for optimizing performance by controlling the frequency of function calls in response to rapid events.
-version: 0.3.1
+version: 0.3.2
 repository: https://github.com/dev-cetera/df_debouncer
 funding:
   - https://www.buymeacoffee.com/dev_cetera

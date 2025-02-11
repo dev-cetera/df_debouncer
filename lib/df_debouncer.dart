@@ -14,4 +14,4 @@
 /// controlling the frequency of function calls in response to rapid events.
 library;
 
-export 'src/debouncer.dart';
+export 'src/_index.g.dart';
