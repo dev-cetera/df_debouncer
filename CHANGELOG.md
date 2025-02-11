@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.3]
+
+- Released @ 2/2025 (UTC)
+- fix: Minor fix
+
 ## [0.3.2]
 
 - Released @ 2/2025 (UTC)

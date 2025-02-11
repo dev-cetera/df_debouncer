@@ -28,7 +28,8 @@ final class CacheManager<T> {
       return null;
     }
     final item = _cache[key];
-    if (item != null && (item.expiration == null || item.expiration!.isAfter(DateTime.now()))) {
+    if (item != null &&
+        (item.expiration == null || item.expiration!.isAfter(DateTime.now()))) {
       return item.value;
     }
     _cache.remove(key);
