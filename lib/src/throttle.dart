@@ -10,18 +10,12 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+/// Base class for throttle functionality.
 final class Throttle {
   final Duration duration;
   bool _isThrottled = false;
 
   Throttle(this.duration);
-
-  Throttle.immediate() : duration = const Duration();
-  Throttle.to24hz() : duration = const Duration(milliseconds: 1000 ~/ 24);
-  Throttle.to30hz() : duration = const Duration(milliseconds: 1000 ~/ 30);
-  Throttle.to48hz() : duration = const Duration(milliseconds: 1000 ~/ 48);
-  Throttle.to60hz() : duration = const Duration(milliseconds: 1000 ~/ 60);
-  Throttle.to120hz() : duration = const Duration(milliseconds: 1000 ~/ 120);
 
   bool get isThrottled => _isThrottled;
 
@@ -31,4 +25,34 @@ final class Throttle {
     action();
     Future.delayed(duration, () => _isThrottled = false);
   }
+}
+
+/// Throttle with no delay.
+final class ThrottleImmediate extends Throttle {
+  ThrottleImmediate() : super(const Duration());
+}
+
+/// Throttle at 24 Hz.
+final class Throttle24Hz extends Throttle {
+  Throttle24Hz() : super(const Duration(milliseconds: 1000 ~/ 24));
+}
+
+/// Throttle at 30 Hz.
+final class Throttle30Hz extends Throttle {
+  Throttle30Hz() : super(const Duration(milliseconds: 1000 ~/ 30));
+}
+
+/// Throttle at 48 Hz.
+final class Throttle48Hz extends Throttle {
+  Throttle48Hz() : super(const Duration(milliseconds: 1000 ~/ 48));
+}
+
+/// Throttle at 60 Hz.
+final class Throttle60Hz extends Throttle {
+  Throttle60Hz() : super(const Duration(milliseconds: 1000 ~/ 60));
+}
+
+/// Throttle at 120 Hz.
+final class Throttle120Hz extends Throttle {
+  Throttle120Hz() : super(const Duration(milliseconds: 1000 ~/ 120));
 }

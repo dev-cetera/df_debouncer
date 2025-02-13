@@ -12,8 +12,7 @@
 
 import 'dart:async' show FutureOr, Timer;
 
-import 'package:df_safer_dart/df_safer_dart.dart' show Sequential, None;
-import 'package:df_type/df_type.dart' show consec;
+import 'package:df_type/df_type.dart' show Sequential;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -65,34 +64,33 @@ final class Debouncer {
     cancel();
     if (!_hasStarted) {
       if (this.onStart != null) {
-        _sequential.add((_) => consec(this.onStart!(), (_) => const None()));
+        _sequential.add((_) => this.onStart!());
       }
       if (onStart != null) {
-        _sequential.add((_) => consec(onStart(), (_) => const None()));
+        _sequential.add((_) => onStart());
       }
       _hasStarted = true;
     }
     if (this.onCall != null) {
-      _sequential.add((_) => consec(this.onCall!(), (_) => const None()));
+      _sequential.add((_) => this.onCall!());
     }
     if (onCall != null) {
-      _sequential.add((_) => consec(onCall(), (_) => const None()));
+      _sequential.add((_) => onCall());
     }
     _timer = Timer(
       delay,
       () {
         if (this.onWaited != null) {
-          _sequential.add((_) => consec(this.onWaited!(), (_) => const None()));
+          _sequential.add((_) => this.onWaited!());
         }
         if (onWaited != null) {
-          _sequential.add((_) => consec(onWaited(), (_) => const None()));
+          _sequential.add((_) => onWaited());
         }
         _hasStarted = false;
       },
     );
 
-    // ignore: invalid_use_of_visible_for_testing_member
-    return _sequential.last.value;
+    return _sequential.last;
   }
 
   //
@@ -103,13 +101,12 @@ final class Debouncer {
   FutureOr<void> finalize({FutureOr<void> Function()? onWaited}) {
     if (cancel()) {
       if (this.onWaited != null) {
-        _sequential.add((_) => consec(this.onWaited!(), (_) => const None()));
+        _sequential.add((_) => this.onWaited!());
       }
       if (onWaited != null) {
-        _sequential.add((_) => consec(onWaited(), (_) => const None()));
+        _sequential.add((_) => onWaited());
       }
-      // ignore: invalid_use_of_visible_for_testing_member
-      return _sequential.last.value;
+      return _sequential.last;
     }
   }
 
