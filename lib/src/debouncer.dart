@@ -43,12 +43,7 @@ final class Debouncer {
   //
   //
 
-  Debouncer({
-    required this.delay,
-    this.onStart,
-    this.onWaited,
-    this.onCall,
-  });
+  Debouncer({required this.delay, this.onStart, this.onWaited, this.onCall});
 
   //
   //
@@ -77,18 +72,15 @@ final class Debouncer {
     if (onCall != null) {
       _sequential.add((_) => onCall());
     }
-    _timer = Timer(
-      delay,
-      () {
-        if (this.onWaited != null) {
-          _sequential.add((_) => this.onWaited!());
-        }
-        if (onWaited != null) {
-          _sequential.add((_) => onWaited());
-        }
-        _hasStarted = false;
-      },
-    );
+    _timer = Timer(delay, () {
+      if (this.onWaited != null) {
+        _sequential.add((_) => this.onWaited!());
+      }
+      if (onWaited != null) {
+        _sequential.add((_) => onWaited());
+      }
+      _hasStarted = false;
+    });
 
     return _sequential.last;
   }

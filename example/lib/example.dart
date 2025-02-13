@@ -89,24 +89,18 @@ class _DebouncerExampleState extends State<DebouncerExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('df_debouncer Example'),
-      ),
+      appBar: AppBar(title: const Text('df_debouncer Example')),
       body: Column(
         children: [
           TextField(
             controller: _nameController,
-            decoration: const InputDecoration(
-              labelText: 'Name:',
-            ),
+            decoration: const InputDecoration(labelText: 'Name:'),
             // Tigger the autosave when the form changes.
             onChanged: (_) => _autosave(),
           ),
           TextField(
             controller: _emailController,
-            decoration: const InputDecoration(
-              labelText: 'Email:',
-            ),
+            decoration: const InputDecoration(labelText: 'Email:'),
             onChanged: (_) => _autosave(),
           ),
         ],

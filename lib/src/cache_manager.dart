@@ -50,5 +50,5 @@ final class _CachedItem<T> {
   final DateTime? expiration;
 
   _CachedItem(this.value, Duration? duration)
-      : expiration = duration != null ? DateTime.now().add(duration) : null;
+    : expiration = duration != null ? DateTime.now().add(duration) : null;
 }

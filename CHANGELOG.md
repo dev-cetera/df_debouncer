@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.0]
+
+- Released @ 2/2025 (UTC)
+- breaking: Improve and refactor
+
 ## [0.3.3]
 
 - Released @ 2/2025 (UTC)
