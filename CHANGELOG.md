@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.3]
+
+- Released @ 2/2025 (UTC)
+- chore: Update dependencies
+
 ## [0.4.2]
 
 - Released @ 2/2025 (UTC)
@@ -64,7 +69,7 @@
 
 - Released @ 2/2025 (UTC)
 - chore: Update dependencies
-- chore: Update CI/CD scripts and  analysis options
+- chore: Update CI/CD scripts and analysis options
 
 ## [0.2.2]
 
@@ -90,4 +95,3 @@
 ## [0.1.0]
 
 - Released @ 2/2025 (UTC)
-
