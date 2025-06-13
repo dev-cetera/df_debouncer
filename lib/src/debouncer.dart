@@ -12,7 +12,9 @@
 
 import 'dart:async' show FutureOr, Timer;
 
-import 'package:df_type/df_type.dart' show Sequential;
+import 'package:df_safer_dart/df_safer_dart.dart';
+
+typedef _VoidCallback = FutureOr<void> Function();
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -25,25 +27,35 @@ final class Debouncer {
 
   Timer? _timer;
   bool _hasStarted = false;
-  final _sequential = Sequential();
+  final _sequencer = SafeSequencer();
 
   /// The function to call once at the very beginning.
-  final FutureOr<void> Function()? onStart;
+  final _VoidCallback? _onStart;
+  _VoidCallback? get onStart => _onStart;
 
   /// The function to call after the [delay] has passed.
-  final FutureOr<void> Function()? onWaited;
+  final _VoidCallback? _onWaited;
+  _VoidCallback? get onWaited => _onWaited;
 
   /// The function to call immediately.
-  final FutureOr<void> Function()? onCall;
+  final _VoidCallback? _onCall;
+  _VoidCallback? get onCall => _onCall;
 
-  /// The delay before calling the [onWaited] function.
+  /// The delay before calling the [_onWaited] function.
   final Duration delay;
 
   //
   //
   //
 
-  Debouncer({required this.delay, this.onStart, this.onWaited, this.onCall});
+  Debouncer({
+    required this.delay,
+    FutureOr<void> Function()? onStart,
+    FutureOr<void> Function()? onWaited,
+    FutureOr<void> Function()? onCall,
+  })  : _onCall = onCall,
+        _onWaited = onWaited,
+        _onStart = onStart;
 
   //
   //
@@ -58,31 +70,31 @@ final class Debouncer {
   }) {
     cancel();
     if (!_hasStarted) {
-      if (this.onStart != null) {
-        _sequential.add((_) => this.onStart!());
+      if (_onStart != null) {
+        _sequencer.add(_onStart);
       }
       if (onStart != null) {
-        _sequential.add((_) => onStart());
+        _sequencer.add(onStart);
       }
       _hasStarted = true;
     }
-    if (this.onCall != null) {
-      _sequential.add((_) => this.onCall!());
+    if (_onCall != null) {
+      _sequencer.add(_onCall);
     }
     if (onCall != null) {
-      _sequential.add((_) => onCall());
+      _sequencer.add(onCall);
     }
     _timer = Timer(delay, () {
-      if (this.onWaited != null) {
-        _sequential.add((_) => this.onWaited!());
+      if (_onWaited != null) {
+        _sequencer.add(_onWaited);
       }
       if (onWaited != null) {
-        _sequential.add((_) => onWaited());
+        _sequencer.add(onWaited);
       }
       _hasStarted = false;
     });
 
-    return _sequential.last;
+    return _sequencer.last.value;
   }
 
   //
@@ -92,13 +104,13 @@ final class Debouncer {
   /// Finalizes the debouncer and calls the [onWaited] function.
   FutureOr<void> finalize({FutureOr<void> Function()? onWaited}) {
     if (cancel()) {
-      if (this.onWaited != null) {
-        _sequential.add((_) => this.onWaited!());
+      if (_onWaited != null) {
+        _sequencer.add(_onWaited);
       }
       if (onWaited != null) {
-        _sequential.add((_) => onWaited());
+        _sequencer.add(onWaited);
       }
-      return _sequential.last;
+      return _sequencer.last.value;
     }
   }
 
