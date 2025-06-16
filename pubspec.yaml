@@ -12,7 +12,7 @@
 
 name: df_debouncer
 description: A package that provides a practical Debouncer for optimizing performance by controlling the frequency of function calls in response to rapid events.
-version: 0.4.10
+version: 0.4.11
 homepage: https://dev-cetera.com/
 repository: https://github.com/dev-cetera/df_debouncer
 funding:
@@ -33,7 +33,7 @@ environment:
 
 dependencies:
   df_type: ^0.12.3
-  df_safer_dart: ^0.13.14
+  df_safer_dart: ^0.14.10
 
 ## -----------------------------------------------------------------------------
 
