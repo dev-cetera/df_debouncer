@@ -3,9 +3,9 @@
 
 Dart & Flutter Packages by dev-cetera.com & contributors.
 
-[![pub](https://img.shields.io/pub/v/df_debouncer}.svg)](https://pub.dev/packages/df_debouncer})
-[![tag](https://img.shields.io/badge/tag-v0.4.11-purple)](https://github.com/dev-cetera/df_debouncer}/tree/v0.4.11)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/dev-cetera/df_debouncer}/main/LICENSE)
+[![pub](https://img.shields.io/pub/v/df_debouncer.svg)](https://pub.dev/packages/df_debouncer)
+[![tag](https://img.shields.io/badge/tag-v0.4.11-purple)](https://github.com/dev-cetera/df_debouncer/tree/v0.4.11)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/dev-cetera/df_debouncer/main/LICENSE)
 
 ---
 
