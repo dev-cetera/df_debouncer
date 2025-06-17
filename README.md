@@ -3,16 +3,19 @@
 
 Dart & Flutter Packages by dev-cetera.com & contributors.
 
-[![pub package](https://img.shields.io/pub/v/df_debouncer.svg)](https://pub.dev/packages/df_debouncer)
-[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/dev-cetera/df_debouncer/main/LICENSE)
+[![pub](https://img.shields.io/pub/v/df_debouncer}.svg)](https://pub.dev/packages/df_debouncer})
+[![tag](https://img.shields.io/badge/tag-v0.4.11-purple)](https://github.com/dev-cetera/df_debouncer}/tree/v0.4.11)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/dev-cetera/df_debouncer}/main/LICENSE)
+
+---
+
+<!-- BEGIN _README_CONTENT -->
 
 ## Summary
 
 A package that provides a practical Debouncer for optimizing performance by controlling the frequency of function calls in response to rapid events.
 
-For a full feature set, please refer to the [API reference](https://pub.dev/documentation/df_debouncer/).
-
-## Usage Example
+## Example
 
 ```dart
 // Create a debouncer to automatically save a form to the database after some delay.
@@ -48,6 +51,12 @@ void dispose() {
 }
 ```
 
+<!-- END _README_CONTENT -->
+
+---
+
+Please refer to the [API reference](https://pub.dev/documentation/df_debouncer/) for more information.
+
 ---
 
 ## Contributing and Discussions
@@ -75,4 +84,5 @@ If you're enjoying this package and find it valuable, consider showing your appr
 
 ## License
 
-This project is released under the MIT License. See [LICENSE](https://raw.githubusercontent.com/dev-cetera/df_debouncer/main/LICENSE) for more information.
+This project is released under the [MIT License](https://raw.githubusercontent.com/dev-cetera/df_debouncer/main/LICENSE). See [LICENSE](https://raw.githubusercontent.com/dev-cetera/df_debouncer/main/LICENSE) for more information.
+
