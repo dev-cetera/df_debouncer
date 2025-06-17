@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.11]
+
+- Released @ 6/2025 (UTC)
+- Update docs and workflow
+
 ## [0.4.10]
 
 - Released @ 6/2025 (UTC)
