@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.12]
+
+- Released @ 6/2025 (UTC)
+- Fix typo in readme and test
+
 ## [0.4.11]
 
 - Released @ 6/2025 (UTC)
