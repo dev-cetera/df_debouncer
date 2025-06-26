@@ -27,7 +27,7 @@ final class Debouncer {
 
   Timer? _timer;
   bool _hasStarted = false;
-  final _sequencer = SafeSequencer();
+  final _sequencer = TaskSequencer();
 
   /// The function to call once at the very beginning.
   final _VoidCallback? _onStart;
@@ -53,9 +53,9 @@ final class Debouncer {
     FutureOr<void> Function()? onStart,
     FutureOr<void> Function()? onWaited,
     FutureOr<void> Function()? onCall,
-  }) : _onCall = onCall,
-       _onWaited = onWaited,
-       _onStart = onStart;
+  })  : _onCall = onCall,
+        _onWaited = onWaited,
+        _onStart = onStart;
 
   //
   //
@@ -71,30 +71,30 @@ final class Debouncer {
     cancel();
     if (!_hasStarted) {
       if (_onStart != null) {
-        _sequencer.add(_onStart);
+        _sequencer.then(_convertHandler(_onStart)).end();
       }
       if (onStart != null) {
-        _sequencer.add(onStart);
+        _sequencer.then(_convertHandler(onStart)).end();
       }
       _hasStarted = true;
     }
     if (_onCall != null) {
-      _sequencer.add(_onCall);
+      _sequencer.then(_convertHandler(_onCall)).end();
     }
     if (onCall != null) {
-      _sequencer.add(onCall);
+      _sequencer.then(_convertHandler(onCall)).end();
     }
     _timer = Timer(delay, () {
       if (_onWaited != null) {
-        _sequencer.add(_onWaited);
+        _sequencer.then(_convertHandler(_onWaited)).end();
       }
       if (onWaited != null) {
-        _sequencer.add(onWaited);
+        _sequencer.then(_convertHandler(onWaited)).end();
       }
       _hasStarted = false;
     });
 
-    return _sequencer.last.value;
+    return _sequencer.completion.value;
   }
 
   //
@@ -105,12 +105,12 @@ final class Debouncer {
   FutureOr<void> finalize({FutureOr<void> Function()? onWaited}) {
     if (cancel()) {
       if (_onWaited != null) {
-        _sequencer.add(_onWaited);
+        _sequencer.then(_convertHandler(_onWaited)).end();
       }
       if (onWaited != null) {
-        _sequencer.add(onWaited);
+        _sequencer.then(_convertHandler(onWaited)).end();
       }
-      return _sequencer.last.value;
+      return _sequencer.completion.value;
     }
   }
 
@@ -129,4 +129,16 @@ final class Debouncer {
     }
     return false;
   }
+}
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+TTaskHandler<Object> _convertHandler(FutureOr<void> Function() handler) {
+  return (_) {
+    final f = handler();
+    if (f is Future) {
+      return f.then((_) => const None()).toResolvable();
+    }
+    return Sync.okValue(const None());
+  };
 }
