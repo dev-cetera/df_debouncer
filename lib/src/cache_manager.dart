@@ -59,7 +59,7 @@ final class _CachedItem<T> {
   final DateTime? expiration;
 
   _CachedItem(this.value, Duration? duration)
-      : expiration = duration != null ? DateTime.now().add(duration) : null;
+    : expiration = duration != null ? DateTime.now().add(duration) : null;
 
   /// Helper to check if the item is expired. An item without an expiration
   /// date is never considered expired.

@@ -53,9 +53,9 @@ final class Debouncer {
     FutureOr<void> Function()? onStart,
     FutureOr<void> Function()? onWaited,
     FutureOr<void> Function()? onCall,
-  })  : _onCall = onCall,
-        _onWaited = onWaited,
-        _onStart = onStart;
+  }) : _onCall = onCall,
+       _onWaited = onWaited,
+       _onStart = onStart;
 
   //
   //
