@@ -14,9 +14,11 @@ name: df_debouncer
 homepage: https://dev-cetera.com/
 repository: https://github.com/robmllze/df_debouncer
 funding:
-  - https://www.buymeacoffee.com/dev_cetera
+- https://www.buymeacoffee.com/dev_cetera
+- https://www.patreon.com/c/RobertMollentze
+- https://github.com/sponsors/robmllze
 description: A package that provides a practical Debouncer for optimizing performance by controlling the frequency of function calls in response to rapid events.
-version: 0.4.15
+version: 0.4.16
 topics:
   - debouncer
   - reactive
@@ -33,12 +35,12 @@ environment:
 
 dependencies:
   df_type: ^0.14.1
-  df_safer_dart: ^0.16.2
+  df_safer_dart: ^0.17.0
 
 ## -----------------------------------------------------------------------------
 
 dev_dependencies:
   lints: ^6.0.0
   custom_lint: ^0.7.5
-  df_safer_dart_lints: ^0.3.2
+  df_safer_dart_lints: ^0.3.3
 
