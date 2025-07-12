@@ -1,9 +1,10 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Dart/Flutter (DF) Packages by dev-cetera.com & contributors. The use of this
-// source code is governed by an MIT-style license described in the LICENSE
-// file located in this project's root directory.
+// Copyright © dev-cetera.com & contributors.
+//
+// The use of this source code is governed by an MIT-style license described in
+// the LICENSE file located in this project's root directory.
 //
 // See: https://opensource.org/license/mit
 //
@@ -59,7 +60,7 @@ final class _CachedItem<T> {
   final DateTime? expiration;
 
   _CachedItem(this.value, Duration? duration)
-    : expiration = duration != null ? DateTime.now().add(duration) : null;
+      : expiration = duration != null ? DateTime.now().add(duration) : null;
 
   /// Helper to check if the item is expired. An item without an expiration
   /// date is never considered expired.
