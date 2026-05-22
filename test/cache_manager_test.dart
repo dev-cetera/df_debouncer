@@ -67,7 +67,8 @@ void main() {
       expect(cache.length, 0);
     });
 
-    test('re-caching a key with a different duration honours the new '
+    test(
+        're-caching a key with a different duration honours the new '
         'expiration and does not let the old timer evict the new value',
         () async {
       final cache = CacheManager<String>();
@@ -92,7 +93,8 @@ void main() {
       );
     });
 
-    test('re-caching with no duration cancels any previous expiration', () async {
+    test('re-caching with no duration cancels any previous expiration',
+        () async {
       final cache = CacheManager<int>();
       cache.cache('k', 1, cacheDuration: const Duration(milliseconds: 20));
       cache.cache('k', 2);
@@ -143,8 +145,7 @@ void main() {
       expect(cache['b'], 3);
     });
 
-    test('dispose() behaves like clear() and the manager remains reusable',
-        () {
+    test('dispose() behaves like clear() and the manager remains reusable', () {
       final cache = CacheManager<int>();
       cache.cache('a', 1, cacheDuration: const Duration(milliseconds: 20));
       cache.dispose();

@@ -16,7 +16,8 @@ import 'package:test/test.dart';
 
 void main() {
   group('Throttle', () {
-    test('first call executes immediately, subsequent calls within the '
+    test(
+        'first call executes immediately, subsequent calls within the '
         'cool-down are ignored', () {
       final throttle = Throttle(const Duration(milliseconds: 100));
       var count = 0;
@@ -89,7 +90,8 @@ void main() {
       expect(Throttle120Hz().duration.inMilliseconds, 1000 ~/ 120);
     });
 
-    test('multiple runs across multiple cool-downs each execute once', () async {
+    test('multiple runs across multiple cool-downs each execute once',
+        () async {
       final throttle = Throttle(const Duration(milliseconds: 25));
       var count = 0;
       for (var round = 0; round < 3; round++) {
