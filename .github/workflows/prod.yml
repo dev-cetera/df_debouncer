@@ -95,20 +95,22 @@ jobs:
           # GitHub blocks workflow_run cascades from GITHUB_TOKEN.
           token: ${{ secrets.RELEASE_PAT }}
 
-      - name: Set up Dart
-        uses: dart-lang/setup-dart@v1
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
 
       - name: Install dependencies
-        run: dart pub get
+        run: flutter pub get
 
       - name: Verify formatter
         run: dart format --output=none --set-exit-if-changed .
 
       - name: Static analysis
-        run: dart analyze --fatal-infos
+        run: flutter analyze
 
       - name: Run tests
-        run: dart test
+        run: flutter test
 
       - name: Decide next version
         id: bump

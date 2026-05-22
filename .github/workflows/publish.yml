@@ -42,20 +42,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Set up Dart
-        uses: dart-lang/setup-dart@v1
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
 
       - name: Install dependencies
-        run: dart pub get
+        run: flutter pub get
 
       # Defensive re-test: the prod.yml workflow already gated on these, but
       # someone could have hand-tagged an arbitrary commit. We want a hard
       # guarantee that what we ship to pub.dev compiles and passes tests.
       - name: Static analysis
-        run: dart analyze --fatal-infos
+        run: flutter analyze
 
       - name: Run tests
-        run: dart test
+        run: flutter test
 
       - name: Verify pubspec version matches tag
         run: |
