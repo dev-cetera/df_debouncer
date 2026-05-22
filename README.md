@@ -1,65 +1,93 @@
-<a href="https://www.buymeacoffee.com/dev_cetera" target="_blank"><img align="right" src="https://cdn.buymeacoffee.com/buttons/default-orange.png" height="48"></a>
-<a href="https://discord.gg/gEQ8y2nfyX" target="_blank"><img align="right" src="https://raw.githubusercontent.com/dev-cetera/.github/refs/heads/main/assets/icons/discord_icon/discord_icon.svg" height="48"></a>
-
-Dart & Flutter Packages by dev-cetera.com & contributors.
-
-[![sponsor](https://img.shields.io/badge/sponsor-grey?logo=github-sponsors)](https://github.com/sponsors/dev-cetera)
-[![patreon](https://img.shields.io/badge/patreon-grey?logo=patreon)](https://www.patreon.com/c/RobertMollentze)
 [![pub](https://img.shields.io/pub/v/df_debouncer.svg)](https://pub.dev/packages/df_debouncer)
-[![tag](https://img.shields.io/badge/tag-v0.4.16-purple?logo=github)](https://github.com/dev-cetera/df_debouncer/tree/v0.4.16)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/dev-cetera/df_debouncer/main/LICENSE)
+[![tag](https://img.shields.io/badge/Tag-v0.5.0-purple?logo=github)](https://github.com/dev-cetera/df_debouncer/tree/v0.5.0)
+[![buymeacoffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/dev_cetera)
+[![sponsor](https://img.shields.io/badge/Sponsor-grey?logo=github-sponsors&logoColor=pink)](https://github.com/sponsors/dev-cetera)
+[![patreon](https://img.shields.io/badge/Patreon-grey?logo=patreon)](https://www.patreon.com/robelator)
+[![discord](https://img.shields.io/badge/Discord-5865F2?logo=discord&logoColor=white)](https://discord.gg/gEQ8y2nfyX)
+[![instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/dev_cetera/)
+[![license](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/dev-cetera/df_debouncer/main/LICENSE)
 
 ---
-
-[![banner](https://github.com/dev-cetera/df_safer_dart/blob/v0.4.16/doc/assets/banner.png?raw=true)](https://github.com/dev-cetera)
-
-<!-- BEGIN _README_CONTENT -->
 
 ## Summary
 
-A package that provides a practical Debouncer for optimizing performance by controlling the frequency of function calls in response to rapid events.
+Lightweight building blocks for controlling the rate of function calls in
+response to rapid events:
 
-## Example
+- **`Debouncer`** — delays running an action until things have been quiet
+  for a chosen window. Supports leading-edge (`onStart`), per-call
+  (`onCall`), and trailing-edge (`onWaited`) callbacks, plus `finalize()`
+  to flush a pending wait and `dispose()` to abandon it.
+- **`Throttle`** — runs an action at most once per cool-down window.
+  Ships with presets for common refresh rates (`Throttle24Hz`,
+  `Throttle30Hz`, `Throttle48Hz`, `Throttle60Hz`, `Throttle120Hz`) and
+  `ThrottleImmediate` for no-op throttling.
+- **`CacheManager<T>`** — a small in-memory cache with optional per-entry
+  expiration. Re-caching a key cancels its previous expiration timer, so
+  values are never silently evicted by a stale timer.
 
-```dart
-// Create a debouncer to automatically save a form to the database after some delay.
-late final _autosave = Debouncer(
-  delay: const Duration(milliseconds: 500),
-   onStart: () {
-      print('Saving form...');
-    },
-  onWaited: () {
-    final name = _nameController.text;
-    final email = _emailController.text;
-    print('Form saved to database: {"name": "$name", "email": "$email"}');
-  },
-  onCall: () {
-    print('Form changed!');
-  },
-);
+## Installation
 
-// Tigger the autosave when the form changes.
-TextField(
-  controller: _emailController,
-  decoration: const InputDecoration(
-    labelText: 'Email:',
-   ),
-  onChanged: (_) => _autosave(),
-),
-
-// Immediately save the form to the database when the page is closed.
-@override
-void dispose() {
-  _autosave.finalize();
-  super.dispose();
-}
+```sh
+dart pub add df_debouncer
+# or, for a Flutter project:
+flutter pub add df_debouncer
 ```
 
-<!-- END _README_CONTENT -->
+## Usage
+
+### Debouncer
+
+```dart
+import 'package:df_debouncer/df_debouncer.dart';
+
+final autosave = Debouncer(
+  delay: const Duration(milliseconds: 500),
+  onStart: () => print('Saving...'),       // first call in a burst
+  onCall:  () => print('Form changed'),    // every call
+  onWaited: () => print('Saved to db'),    // 500ms after the last call
+);
+
+// Trigger from rapid events:
+autosave();
+autosave();
+autosave();
+
+// Flush a pending wait right now (e.g. in dispose):
+await autosave.finalize();
+
+// Or drop the pending wait without running onWaited:
+autosave.dispose();
+```
+
+### Throttle
+
+```dart
+final throttle = Throttle60Hz(); // at most ~60 calls per second
+void onPointerMove(Offset p) {
+  throttle.run(() => repaint(p));
+}
+
+// Clear the cool-down early:
+throttle.cancel();
+```
+
+### CacheManager
+
+```dart
+final cache = CacheManager<String>();
+cache.cache('greeting', 'hello', cacheDuration: const Duration(minutes: 5));
+
+final greeting = cache['greeting']; // 'hello' (or null once expired)
+
+cache.remove('greeting');
+cache.clear();
+```
+
 
 ---
 
-☝️ Please refer to the [API reference](https://pub.dev/documentation/df_debouncer/) for more information.
+🔍 For more information, refer to the [API reference](https://pub.dev/documentation/df_debouncer/).
 
 ---
 
@@ -69,7 +97,6 @@ This is an open-source project, and we warmly welcome contributions from everyon
 
 ### ☝️ Ways you can contribute
 
-- **Buy me a coffee:** If you'd like to support the project financially, consider [buying me a coffee](https://www.buymeacoffee.com/dev_cetera). Your support helps cover the costs of development and keeps the project growing.
 - **Find us on Discord:** Feel free to ask questions and engage with the community here: https://discord.gg/gEQ8y2nfyX.
 - **Share your ideas:** Every perspective matters, and your ideas can spark innovation.
 - **Help others:** Engage with other users by offering advice, solutions, or troubleshooting assistance.
@@ -86,6 +113,6 @@ If you're enjoying this package and find it valuable, consider showing your appr
 
 <a href="https://www.buymeacoffee.com/dev_cetera" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" height="40"></a>
 
-## 🧑‍⚖️ License
+## LICENSE
 
 This project is released under the [MIT License](https://raw.githubusercontent.com/dev-cetera/df_debouncer/main/LICENSE). See [LICENSE](https://raw.githubusercontent.com/dev-cetera/df_debouncer/main/LICENSE) for more information.

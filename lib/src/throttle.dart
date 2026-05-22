@@ -11,6 +11,8 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
+import 'dart:async' show Timer;
+
 /// Limits the execution rate of a function.
 ///
 /// Once an action is run, subsequent calls are ignored for the specified
@@ -19,8 +21,8 @@ final class Throttle {
   /// The cool-down period after an action is executed.
   final Duration duration;
 
-  // Internal flag to track the throttle state.
   bool _isThrottled = false;
+  Timer? _timer;
 
   /// Creates a throttle with a specific cool-down [duration].
   Throttle(this.duration);
@@ -35,16 +37,38 @@ final class Throttle {
   void run(void Function() action) {
     if (_isThrottled) return;
     _isThrottled = true;
-    action();
-    Future.delayed(duration, () => _isThrottled = false);
+    try {
+      action();
+    } finally {
+      // A zero/negative duration means "no cool-down" — keep the throttle
+      // open for the next call instead of paying for a Timer hop.
+      if (duration <= Duration.zero) {
+        _isThrottled = false;
+      } else {
+        _timer?.cancel();
+        _timer = Timer(duration, () {
+          _isThrottled = false;
+          _timer = null;
+        });
+      }
+    }
+  }
+
+  /// Cancels any pending cool-down and resets the throttle so the next call
+  /// to [run] will execute immediately.
+  void cancel() {
+    _timer?.cancel();
+    _timer = null;
+    _isThrottled = false;
   }
 }
 
 /// A throttle that runs immediately and has no cool-down period.
 ///
-/// This effectively disables throttling, allowing every call to `run` to execute.
+/// This effectively disables throttling, allowing every call to `run` to
+/// execute.
 final class ThrottleImmediate extends Throttle {
-  ThrottleImmediate() : super(const Duration());
+  ThrottleImmediate() : super(Duration.zero);
 }
 
 /// A throttle that limits execution to approximately 24 times per second.

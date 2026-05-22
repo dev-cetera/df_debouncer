@@ -62,6 +62,15 @@ final class Debouncer {
   //
   //
 
+  /// Whether a debounce window is currently open — i.e. a [call] has been
+  /// made and the [delay] has not yet elapsed (and the debouncer has not
+  /// been cancelled or finalized).
+  bool get isPending => _timer?.isActive ?? false;
+
+  //
+  //
+  //
+
   /// Calls the [onCall] function and then waits for [delay] before calling the
   /// [onWaited] function.
   FutureOr<void> call({
@@ -86,6 +95,7 @@ final class Debouncer {
       _sequencer.then(_convertHandler(onCall)).end();
     }
     _timer = Timer(delay, () {
+      _timer = null;
       if (_onWaited != null) {
         _sequencer.then(_convertHandler(_onWaited)).end();
       }
@@ -102,33 +112,47 @@ final class Debouncer {
   //
   //
 
-  /// Finalizes the debouncer and calls the [onWaited] function.
+  /// Finalizes the debouncer: cancels the pending timer (if any) and
+  /// immediately runs the [onWaited] callbacks. Resets the started state
+  /// so that the next [call] will fire [onStart] again.
   FutureOr<void> finalize({FutureOr<void> Function()? onWaited}) {
-    if (cancel()) {
-      if (_onWaited != null) {
-        _sequencer.then(_convertHandler(_onWaited)).end();
-      }
-      if (onWaited != null) {
-        _sequencer.then(_convertHandler(onWaited)).end();
-      }
-      return _sequencer.completion.value;
+    final wasCancelled = cancel();
+    _hasStarted = false;
+    if (!wasCancelled) return null;
+    if (_onWaited != null) {
+      _sequencer.then(_convertHandler(_onWaited)).end();
     }
+    if (onWaited != null) {
+      _sequencer.then(_convertHandler(onWaited)).end();
+    }
+    return _sequencer.completion.value;
   }
 
   //
   //
   //
 
-  /// Cancels the debouncer.
+  /// Cancels any pending wait. Returns `true` if a wait was actually
+  /// cancelled, `false` if there was nothing pending.
   bool cancel() {
-    if (_timer != null) {
-      if (_timer!.isActive) {
-        _timer!.cancel();
-        _timer = null;
-        return true;
-      }
-    }
-    return false;
+    final timer = _timer;
+    if (timer == null) return false;
+    final wasActive = timer.isActive;
+    timer.cancel();
+    _timer = null;
+    return wasActive;
+  }
+
+  //
+  //
+  //
+
+  /// Cancels any pending wait and resets the debouncer. The pending
+  /// [onWaited] callbacks are dropped (use [finalize] to flush them
+  /// instead). The instance can still be reused after [dispose].
+  void dispose() {
+    cancel();
+    _hasStarted = false;
   }
 }
 

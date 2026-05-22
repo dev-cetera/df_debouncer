@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 void main() {
-  runApp(App());
+  runApp(const App());
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -60,15 +60,17 @@ class _DebouncerExampleState extends State<DebouncerExample> {
   late final _autosave = Debouncer(
     delay: const Duration(milliseconds: 500),
     onStart: () {
-      print('Saving form...');
+      debugPrint('Saving form...');
     },
     onWaited: () {
       final name = _nameController.text;
       final email = _emailController.text;
-      print('Form saved to database: {"name": "$name", "email": "$email"}');
+      debugPrint(
+        'Form saved to database: {"name": "$name", "email": "$email"}',
+      );
     },
     onCall: () {
-      print('Form changed!');
+      debugPrint('Form changed!');
     },
   );
 
