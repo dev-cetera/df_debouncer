@@ -19,7 +19,7 @@ funding:
   - https://www.patreon.com/c/robelator
   - https://github.com/sponsors/robelator
 description: A package that provides a practical Debouncer for optimizing performance by controlling the frequency of function calls in response to rapid events.
-version: 0.5.0
+version: 0.5.1
 topics:
   - debouncer
   - reactive

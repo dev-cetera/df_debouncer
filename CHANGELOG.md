@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.1]
+
+- update
+
+
 ## 0.5.0
 
 - **breaking**: require `df_safer_dart: ^0.20.0` (was `^0.17.3`) and
