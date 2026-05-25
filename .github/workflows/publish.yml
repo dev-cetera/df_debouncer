@@ -1,16 +1,3 @@
-##.title
-## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-##
-## Copyright © dev-cetera.com & contributors.
-##
-## The use of this source code is governed by an MIT-style license described in
-## the LICENSE file located in this project's root directory.
-##
-## See: https://opensource.org/license/mit
-##
-## ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-##.title~
-
 # Publishes to pub.dev. Triggered exclusively by the push of a tag matching
 # `v{X.Y.Z}` (or `v{X.Y.Z+build}`). The companion `prod.yml` workflow is what
 # normally creates those tags, but a maintainer can also tag manually if they
@@ -42,29 +29,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      # setup-dart goes first so its OIDC wiring (PUB_HOSTED_URL + token
-      # plumbing) is in place before flutter-action manipulates PATH.
-      # Without setup-dart, `dart pub publish` doesn't see the OIDC env
-      # vars and falls back to interactive OAuth.
       - name: Set up Dart
         uses: dart-lang/setup-dart@v1
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-
       - name: Install dependencies
-        run: flutter pub get
+        run: dart pub get
 
       # Defensive re-test: the prod.yml workflow already gated on these, but
       # someone could have hand-tagged an arbitrary commit. We want a hard
       # guarantee that what we ship to pub.dev compiles and passes tests.
       - name: Static analysis
-        run: flutter analyze
+        run: dart analyze --fatal-infos
 
       - name: Run tests
-        run: flutter test
+        run: dart test
 
       - name: Verify pubspec version matches tag
         run: |
