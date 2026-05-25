@@ -13,6 +13,8 @@
 
 import 'dart:async' show Timer;
 
+import 'package:clock/clock.dart' show clock;
+
 /// A generic, in-memory cache with optional time-based expiration.
 final class CacheManager<T> {
   final _cache = <String, _CachedItem<T>>{};
@@ -106,13 +108,13 @@ final class _CachedItem<T> {
   final DateTime? expiration;
 
   _CachedItem(this.value, Duration? duration)
-      : expiration = duration != null ? DateTime.now().add(duration) : null;
+      : expiration = duration != null ? clock.now().add(duration) : null;
 
-  /// `true` if the item has a deadline that is at or before [DateTime.now].
-  /// An item without an expiration is never considered expired.
+  /// `true` if the item has a deadline that is at or before the current
+  /// [clock] time. An item without an expiration is never considered expired.
   bool get isExpired {
     final exp = expiration;
     if (exp == null) return false;
-    return !DateTime.now().isBefore(exp);
+    return !clock.now().isBefore(exp);
   }
 }

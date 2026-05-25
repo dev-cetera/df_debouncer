@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.2]
+
+- feat: `CacheManager` expiration consults `package:clock`'s ambient clock
+  instead of `DateTime.now()`, so tests can drive cache expiration
+  deterministically via `withClock(...)` (and `FakeAsync.withClock`).
+  Production behaviour is unchanged.
+- Add `clock: ^1.1.0` dependency.
+
 ## [0.5.1]
 
 No consumer-visible changes; release covers tooling and CI only.

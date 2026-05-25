@@ -86,7 +86,10 @@ jobs:
         uses: dart-lang/setup-dart@v1
 
       - name: Install dependencies
-        run: dart pub get
+        # `--no-example` skips auto-resolution of `./example/`, which can be a
+        # Flutter app even when the package itself is pure Dart — Flutter is
+        # not installed on this runner.
+        run: dart pub get --no-example
 
       - name: Verify formatter
         # Scope to this package's own primary source. Avoids walking into
