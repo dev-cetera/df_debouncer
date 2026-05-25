@@ -2,8 +2,7 @@
 
 ## [0.5.1]
 
-- update
-
+No consumer-visible changes; release covers tooling and CI only.
 
 ## 0.5.0
 
