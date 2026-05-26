@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.5.3]
+
+- **breaking**: require `df_safer_dart: ^0.21.0` (was `^0.20.0`).
+
 ## [0.5.2]
 
 - feat: `CacheManager` expiration consults `package:clock`'s ambient clock
