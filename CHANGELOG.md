@@ -1,5 +1,7 @@
 # Changelog
 
+- Require `df_type: ^0.16.0` (was `^0.15.0`).
+
 ## [0.5.3]
 
 - **breaking**: require `df_safer_dart: ^0.21.0` (was `^0.20.0`).
