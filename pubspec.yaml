@@ -14,12 +14,8 @@
 name: df_debouncer
 homepage: https://dev-cetera.com/
 repository: https://github.com/dev-cetera/df_debouncer
-funding:
-  - https://www.buymeacoffee.com/dev_cetera
-  - https://www.patreon.com/c/robelator
-  - https://github.com/sponsors/robelator
 description: A package that provides a practical Debouncer for optimizing performance by controlling the frequency of function calls in response to rapid events.
-version: 0.5.4
+version: 0.6.0
 topics:
   - debouncer
   - reactive
