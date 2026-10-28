@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.3]
+
+- Merge branch 'main' into prod
+
+
 ## [0.6.2]
 
 - Merge remote-tracking branch 'origin/prod' into prod
